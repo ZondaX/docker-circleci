@@ -22,13 +22,13 @@ default: build
 build: build_circleci
 
 build_circleci:
-	cd src && docker build --rm -f Dockerfile -t $(DOCKER_IMAGE_CIRCLECI):$(HASH_TAG) -t $(DOCKER_IMAGE_CIRCLECI) .
+	cd src && docker build --rm -f Dockerfile -t ghcr.io/$(DOCKER_IMAGE_CIRCLECI):$(HASH_TAG) -t ghcr.io/$(DOCKER_IMAGE_CIRCLECI):latest .
 
 publish_login:
-	docker login
+	docker login ghcr.io
 publish_circleci: build_circleci
-	docker push $(DOCKER_IMAGE_CIRCLECI)
-	docker push $(DOCKER_IMAGE_CIRCLECI):$(HASH_TAG)
+	docker push ghcr.io/$(DOCKER_IMAGE_CIRCLECI):latest
+	docker push ghcr.io/$(DOCKER_IMAGE_CIRCLECI):$(HASH_TAG)
 
 publish: build
 publish: publish_login
